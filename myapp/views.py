@@ -12,6 +12,8 @@ from Tables.models import Table
 
 
 
+
+
 #Upload the Document file and save a copy to the database model Table
 
 def uploadDocx(request):
@@ -129,11 +131,14 @@ def  JsonTable(request):
 
 
     data.append(title)
-
+    rows={}
+    
+    all_data=[]
     #print(list(enumerate(table.rows)))
 
     keys = None
     for i, row in enumerate(table.rows):
+
         text = (cell.text for cell in row.cells)
 
 
@@ -149,8 +154,10 @@ def  JsonTable(request):
         # Construct a dictionary for this row, mapping
         # keys to values for this row
         row_data = dict(zip(keys, text))
-        
-        data.append(row_data)
+        all_data.append(row_data)
+    
+    rows["rows"]=all_data
+    data.append(rows)
         
 
     print(data)
@@ -179,39 +186,42 @@ def  XMLTable(request):
     tables = doc.tables
     print(tables)
     table=doc.tables[docFileName[0].fileIndex]
+
+
     data = []
   
     title={}
     title["title"]=tblName
 
-    print(title)
     data.append(title)
-
-    print("table is")
-    print(table.rows[0].cells[0].text)
-    print(list(enumerate(table.rows)))
+    rows={}
+    
+    all_data=[]
+    #print(list(enumerate(table.rows)))
 
     keys = None
     for i, row in enumerate(table.rows):
+
         text = (cell.text for cell in row.cells)
-        print("the text is")
-        print(text)
+
 
         # Establish the mapping based on the first row
         # headers; these will become the keys of our dictionary
         if i == 0:
-            print(i)
+            
             
             keys = tuple(text)
-            print(keys)
+            
             continue
 
         # Construct a dictionary for this row, mapping
         # keys to values for this row
         row_data = dict(zip(keys, text))
-        print(text)
-        data.append(row_data)
-        print(data)
+        all_data.append(row_data)
+    
+    rows["row"]=all_data
+    data.append(rows)
+
 
     print(data)
 
