@@ -11,7 +11,37 @@ import re
 from Tables.models import Table
 
 
+#Define Home Page view 
 
+def  Home(request):
+    tables=Table.objects.all()
+    context={"tables":tables}
+    return render(request,"Home.html",context)
+
+
+
+
+def  editTable(request):
+    tables=Table.objects.all()
+    message=""
+    tblName =  request.POST["editTableName"]
+    index =  request.POST["editId"]
+    print("The Table Name is : ")
+    print(tblName)
+    # Defining The Regular Expression of paraghraphs strings
+    pattern = re.compile(r'^Table+[0-9]+$')
+
+    if re.match(pattern, tblName):
+        message="Saved Successfuly"
+        Table.objects.filter(id=index).update(name=tblName)
+
+    else:
+        message="Table Name should be like Table0"
+
+
+
+    context={"tables":tables,"message":message}
+    return render(request,"Home.html",context)
 
 
 #Upload the Document file and save a copy to the database model Table

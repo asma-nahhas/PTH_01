@@ -1,0 +1,120 @@
+{% extends 'layout.html' %}
+
+
+
+{% block content %}
+
+<br/>
+<br/>
+  {% if message %}
+      <div class="alert alert-success" role="alert">
+                    {{ message }}
+            </div>
+  {% endif %}
+
+<h3 align="center" style="margin-top: 40px;">Tables</h3>
+
+<div class="container" style="margin-top: 70px;">
+
+	<div class="row">
+
+
+
+		<div class="col-sm">
+					<table class="table table-sm">
+					  <thead>
+					    <tr>
+
+					      <th scope="col">ID</th>
+					      <th scope="col">Name</th>
+					      <th scope="col">File Name</th>
+					      <th scope="col">File Index</th>
+					      <th scope="col">Update</th>
+
+					    </tr>
+					  </thead>
+					  <tbody>
+
+					  {% for table in tables %}
+
+					    <tr>
+					      <th scope="row">{{ table.id }}</th>
+					      <td>{{ table.name }}</td>
+					      <td>{{ table.fileName}}</td>
+					      <td>{{ table.fileIndex }}</td>
+					      <td><button class="btn btn-success" data-toggle="modal" data-target="#editModalCenter"  onclick="updatefunc('{{table}}','{{table.id}}')">
+					      	<i class="fa fa-edit"></i></button></td>
+					    </tr>
+
+					  {% endfor %}
+
+
+					
+					  </tbody>
+					</table>
+		</div>
+
+	</div>
+
+</div>
+
+
+
+<!--Start Edit Modal -->
+<div class="modal fade" id="editModalCenter" tabindex="-1" role="dialog" aria-labelledby="editModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalCenterTitle">Edit Table</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!--Start Form Modal-->
+  <form   id="editForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+      <input type="hidden" class="form-control" name="editId" id="editId" >
+
+
+          <div class="form-group">
+            <label for="exampleInputPassword1">Table Name</label>
+            <input  class="form-control" name="editTableName" id="editTableName" placeholder="Enter Table">
+
+          </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Update</button>
+              </div>
+
+  </form>
+                <!--End Form Modal-->
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Finish Edit Modal-->
+
+
+<script type="text/javascript">
+
+
+	     function updatefunc($table,$id){
+
+        $("#editId").val($id);
+        $("#editTableName").val($table);
+
+        var url = '/editTable?id='+$id;
+
+         $("#editForm").attr('action',url );
+    
+
+      }
+
+</script>
+
+{% endblock %}
