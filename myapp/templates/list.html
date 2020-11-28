@@ -5,6 +5,42 @@
 
 			{% block content %}
 
+
+        <!-- Upload form. Note enctype attribute! -->
+        <form action="{% url "uploadDocx" %}" method="post" enctype="multipart/form-data"  class="form-group" >
+            {% csrf_token %}
+
+
+            
+            <p>{{ form.non_field_errors }}</p>
+
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+
+            <p><input  class="btn btn-primary" type="submit" value="Upload"/></p>
+        </form>
+        
+        {% if message %}
+
+            {% if message == "File Matching the constraints Successfuly" %}
+          
+            <div class="alert alert-success" role="alert">
+                    {{ message }}
+            </div>
+
+            {% else %}
+
+             <div class="alert alert-danger" role="alert">
+                    {{ message }}
+            </div>
+
+            {% endif %}
+         {% endif %}
+
         <!-- List of uploaded documents -->
 		
         {% if documents %}
@@ -29,39 +65,6 @@
         {% endif %}
 		
 
-        <!-- Upload form. Note enctype attribute! -->
-        <form action="{% url "uploadDocx" %}" method="post" enctype="multipart/form-data"  class="form-group" >
-            {% csrf_token %}
-
-        {% if message %}
-
-            {% if message == "File Matching the constraints Successfuly" %}
-          
-            <div class="alert alert-success" role="alert">
-                    {{ message }}
-            </div>
-
-            {% else %}
-
-             <div class="alert alert-danger" role="alert">
-                    {{ message }}
-            </div>
-
-            {% endif %}
-         {% endif %}
-            
-            <p>{{ form.non_field_errors }}</p>
-
-            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
-
-            <p>
-                {{ form.docfile.errors }}
-                {{ form.docfile }}
-            </p>
-
-            <p><input  class="btn btn-primary" type="submit" value="Upload"/></p>
-        </form>
-		
 	
 		
 		

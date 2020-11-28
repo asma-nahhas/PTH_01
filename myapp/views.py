@@ -43,6 +43,15 @@ def uploadDocx(request):
             print("All Headers Are")
             print(allHeaders)
 
+            print("All the Paraghraphs")
+
+            allCurrentParags=[]
+            for paragraph in doc.paragraphs:
+                if paragraph.style.name=='Heading 1':
+                    allCurrentParags.append(paragraph.text)
+
+            print(allCurrentParags)
+
             for i,paragraph in enumerate(doc.paragraphs):
                 if paragraph.style.name=='Heading 1':
                     
@@ -51,7 +60,7 @@ def uploadDocx(request):
                         print("Match found the table name"+paragraph.text)
                         message = 'File Matching the constraints Successfuly'
 
-                        if paragraph.text in allHeaders :
+                        if paragraph.text in allHeaders or paragraph.text in allCurrentParags :
                             message='The Titles in this File is not Unique with previously added Titles'
                         else:
                             Headers.append(paragraph.text)
