@@ -60,7 +60,7 @@ def uploadDocx(request):
                         print("Match found the table name"+paragraph.text)
                         message = 'File Matching the constraints Successfuly'
 
-                        if paragraph.text in allHeaders or paragraph.text in allCurrentParags :
+                        if paragraph.text in allHeaders or  allCurrentParags.count(paragraph.text ) > 1  :
                             message='The Titles in this File is not Unique with previously added Titles'
                         else:
                             Headers.append(paragraph.text)
@@ -102,8 +102,7 @@ def uploadDocx(request):
   #Convert The selected table to a json object   
 
 def  JsonTable(request):
-    #f = open('media/documents/Table1.docx', 'rb')
-    #document = DOCX(f)
+
     tblName =  request.POST["tblName"]
     print("The Table Name is : ")
     print(tblName)
