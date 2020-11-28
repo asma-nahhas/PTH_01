@@ -1,0 +1,69 @@
+
+{% extends 'layout.html' %}
+
+
+
+			{% block content %}
+
+        <!-- List of uploaded documents -->
+		
+        {% if documents %}
+		<br/>
+		<br/>
+		<br/>
+		
+	
+		
+          <h4>  All documents in the database: </h4>
+		  
+            <ul>
+                {% for document in documents %}
+                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+                {% endfor %}
+            </ul>
+			<br/>
+        {% else %}
+			<br/>
+			<br/>
+            <h4>No documents.</h4>
+        {% endif %}
+		
+
+        <!-- Upload form. Note enctype attribute! -->
+        <form action="{% url "uploadDocx" %}" method="post" enctype="multipart/form-data"  class="form-group" >
+            {% csrf_token %}
+
+        {% if message %}
+
+            {% if message == "File Matching the constraints Successfuly" %}
+          
+            <div class="alert alert-success" role="alert">
+                    {{ message }}
+            </div>
+
+            {% else %}
+
+             <div class="alert alert-danger" role="alert">
+                    {{ message }}
+            </div>
+
+            {% endif %}
+         {% endif %}
+            
+            <p>{{ form.non_field_errors }}</p>
+
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+
+            <p><input  class="btn btn-primary" type="submit" value="Upload"/></p>
+        </form>
+		
+	
+		
+		
+	{% endblock %}
+

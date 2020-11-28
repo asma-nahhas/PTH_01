@@ -1,0 +1,57 @@
+
+{% extends 'JsonTables/layout.html' %}
+
+
+
+			{% block content %}
+			
+			<br/>
+			<br/>
+			
+			
+			
+				
+			<form  id="jsonForm" class="form-inline" action="/XMLTable" method="POST">
+				 {% csrf_token %}
+
+				 <input type="hidden" id="tblName" name="tblName" value="">
+
+			
+					<label style="margin-right:10px;">Select Table Name : </label>
+			
+								<select id="xmlTable" class="form-control" style="    margin-right: 30px;">
+										{% for table in tables %}
+										<option>
+											{{ table.name }}
+										</option>
+										{% endfor %}
+							
+								</select>
+										
+					
+					
+					<input type="submit" onclick="sendTableName()"  class="form-control btn btn-primary btn-sm" value="Get Table As XML" />
+			
+					  	
+			
+				</form>
+		
+			
+				
+			</div>
+
+	<script type="text/javascript">
+		
+		function  sendTableName(){
+
+		
+			$("#tblName").val($("#xmlTable").val());
+
+
+
+		}
+
+
+	</script>
+			
+			{% endblock %}
