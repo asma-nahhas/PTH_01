@@ -6,7 +6,7 @@ from .views import Home
 from .views import editTable
 
 urlpatterns = [
-    path('', uploadDocx, name='uploadDocx'),
+    path('uploadDocx', uploadDocx, name='uploadDocx'),
     path('JsonTable', JsonTable, name='JsonTable'),
     path('XMLTable', XMLTable, name='XMLTable'),
     path('home', Home, name='home'),

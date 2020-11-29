@@ -7,9 +7,18 @@
 <br/>
 <br/>
   {% if message %}
-      <div class="alert alert-success" role="alert">
+             {% if message == "Saved Successfuly" %}
+          
+            <div class="alert alert-success" role="alert">
                     {{ message }}
             </div>
+
+            {% else %}
+
+             <div class="alert alert-danger" role="alert">
+                    {{ message }}
+            </div>
+            {% endif %}
   {% endif %}
 
 <h3 align="center" style="margin-top: 40px;">Tables</h3>
